@@ -1,4 +1,3 @@
-var msValue = 0;
 var msBases = [1];
 var msRatios = [(1+ Math.sqrt(5))/2];
 var ratioNames = {
