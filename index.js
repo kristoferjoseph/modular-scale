@@ -1,52 +1,120 @@
-module.exports = function modularScale(ratio, steps) {
-  // Populate scale with base
-  var scale = [1],
-    base = 1,
-    // Default to phi for the ratio
-    ratio = ratio || 1.618,
-    // Default to ~12 steps
-    steps = steps || 12,
-    // Divide steps in half for up and down steps
-    halfSteps = Math.round(steps * 0.5);
-
-  // Populate scale with steps up
-  scaleUp(scale, base, ratio, halfSteps);
-  // Populate scale with steps down
-  scaleDown(scale, base, ratio, halfSteps);
-  // Return the sorted scale from largest to smallest
-  return scale.sort(sortFunction);
-};
-
-function scaleUp(scale, base, ratio, steps) {
-  // Exit when steps are 0
-  if (steps === 0) return;
-  // Calculate the scale step by multiplying 
-  //   by the ratio then rounding to three decimal points.
-  step = Math.round((base * ratio) * 1000) / 1000;
-  // Add the step to the scale
-  scale.push(step);
-  // Recursively call this scaleUp function
-  //   passing the new step as the base and decrementing the step
-  scaleUp(scale, step, ratio, steps - 1);
+var msValue = 0;
+var msBases = [1];
+var msRatios = [(1+ Math.sqrt(5))/2];
+var ratioNames = {
+    minorSecond   : 1.067,
+    majorSecond   : 1.125,
+    minorThird    : 1.2,
+    majorThird    : 1.25,
+    perfectFourth : 1.333,
+    augFourth     : 1.414,
+    perfectFifth  : 1.5,
+    minorSixth    : 1.6,
+    goldenSection : 1.618,
+    majorSixth    : 1.667,
+    minorSeventh  : 1.778,
+    majorSeventh  : 1.875,
+    octave        : 2,
+    majorTenth    : 2.5,
+    majorEleventh : 2.667,
+    majorTwelfth  : 3,
+    doubleOctave  : 4
 }
 
-function scaleDown(scale, base, ratio, steps) {
+module.exports = function modularscale(options) {
+  options = options || {}
+  value  = options.value  || 0
+  bases  = options.bases  || msBases
+  ratios = options.ratios || msRatios
 
-  // Exit when steps are 0
-  if (steps === 0) return;
+  return function ms(value) {
+    var r = []
+    var strand = null
+    var ratio
+    var base
+    var i = 0
 
-  // Calculate the scale step by dividing 
-  //   by the ratio then rounding to three decimal points.
-  step = Math.round((base / ratio) * 1000) / 1000;
-  // Add the step to the scale
-  scale.push(step);
-  // Recursively call this scaleDown function
-  //   passing the new step as the base and decrementing the step
-  scaleDown(scale, step, ratio, steps - 1);
+    if (typeof value === 'string') {
+      value = ratioNames[value] || 0
+    }
+
+    for (ratio = 0; ratio < ratios.length; ratio++) {
+      for (base = 0; base < bases.length; base++) {
+
+        strand = (base + ratio);
+
+        // Seed list with an initial value
+        // r.push(bases[base]);
+
+        // Find values on a positive scale
+        if (value >= 0) {
+          // Find lower values on the scale
+          i = 0
+          while((Math.pow(ratios[ratio], i) * bases[base]) >= bases[0]) {
+            r.push([Math.pow(ratios[ratio], i) * bases[base], strand])
+            i--
+          }
+
+          // Find higher possible values on the scale
+          i = 0
+          while(Math.pow(ratios[ratio], i) * bases[base] <= Math.pow(ratios[ratio], value + 1) * bases[base]) {
+            r.push([Math.pow(ratios[ratio], i) * bases[base], strand])
+            i++
+          }
+        } else {
+          // Find values on a negative scale
+          i = 0
+          while((Math.pow(ratios[ratio], i) * bases[base]) <= bases[0]) {
+            r.push([Math.pow(ratios[ratio], i) * bases[base], strand])
+            i++
+          }
+
+          // // Find higher possible values on the scale
+          i = 0
+          while((Math.pow(ratios[ratio], i) * bases[base]) >= (Math.pow(ratios[ratio], value - 1) * bases[base])) {
+            if (Math.pow(ratios[ratio], i) * bases[base] <= bases[0]) {
+              r.push([Math.pow(ratios[ratio], i) * bases[base], strand])
+            }
+            i--
+          }
+        }
+      }
+    }
+
+    r = msUnique(r)
+
+    // reverse array if value is negative
+    if(value < 0) {
+      r = r.reverse()
+    }
+
+    return r[Math.abs(value)][0]
+  }
 }
 
-// Sort from greatest to smallest
-function sortFunction(a, b) {
-  return b - a;
+function msUnique(origArr) {
+  var x
+  var y
+  var lastVal
+  var i
+
+  origArr = origArr.sort(function(a,b) {
+    x = a[0]
+    y = b[0]
+    return x-y
+  })
+
+  newArr = []
+  lastVal = null
+
+  for (i = 0; i < origArr.length; i++) {
+    var currentVal = origArr[i][0];
+    if (currentVal != lastVal) {
+      newArr.push(origArr[i])
+    }
+    lastVal = currentVal
+  }
+
+  return newArr
 }
 
