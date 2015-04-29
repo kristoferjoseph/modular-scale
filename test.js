@@ -5,6 +5,14 @@ var mocha = require('mocha'),
 
 describe('Modular Scale', function() {
 
+  it('should use ratio names', function() {
+    ms = modularScale({
+      ratios: ['majorTwelfth'],
+      bases: [1]
+    })
+    expect(ms(3)).to.equal(27)
+  });
+
   it('should return octave scale with multiple bases', function() {
     ms = modularScale({
       ratios: [2],

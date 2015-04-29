@@ -26,6 +26,13 @@ module.exports = function modularscale(options) {
   bases  = options.bases  || msBases
   ratios = options.ratios || msRatios
 
+  ratios = ratios.map(function(ratio) {
+    if (typeof ratio === 'string') {
+      ratio = ratioNames[ratio] || 0
+    }
+    return ratio
+  });
+
   return function ms(value) {
     var r = []
     var strand = null
@@ -33,9 +40,6 @@ module.exports = function modularscale(options) {
     var base
     var i = 0
 
-    if (typeof value === 'string') {
-      value = ratioNames[value] || 0
-    }
 
     for (ratio = 0; ratio < ratios.length; ratio++) {
       for (base = 0; base < bases.length; base++) {
