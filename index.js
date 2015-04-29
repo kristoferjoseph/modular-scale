@@ -28,7 +28,7 @@ module.exports = function modularscale(options) {
 
   ratios = ratios.map(function(ratio) {
     if (typeof ratio === 'string') {
-      ratio = ratioNames[ratio] || 0
+      ratio = ratioNames[ratio] || parseInt(ratio, 10) || 0
     }
     return ratio
   });
@@ -40,21 +40,10 @@ module.exports = function modularscale(options) {
     var base
     var i = 0
 
-    if (typeof value === 'string') {
-      value = 1;
-    }
-
-    if (value == undefined) {
-      value = msValue;
-    }
-
     for (ratio = 0; ratio < ratios.length; ratio++) {
       for (base = 0; base < bases.length; base++) {
 
         strand = (base + ratio);
-
-        // Seed list with an initial value
-        // r.push(bases[base]);
 
         // Find values on a positive scale
         if (value >= 0) {

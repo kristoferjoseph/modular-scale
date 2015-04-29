@@ -16,15 +16,15 @@ describe('Modular Scale', function() {
   it('should return octave scale with multiple bases', function() {
     ms = modularScale({
       ratios: [2],
-      bases: [16,12]
+      bases: ['16',12]
     })
 
     expect(ms(-1)).to.equal(12)
     expect(ms(0)).to.equal(12)
-    expect(ms(1)).to.equal(16)
+    expect(ms('1')).to.equal(16)
     expect(ms(2)).to.equal(24)
     expect(ms(3)).to.equal(32)
-    expect(ms(4)).to.equal(48)
+    expect(ms('4')).to.equal(48)
   });
 
   it('should return default scale', function() {
