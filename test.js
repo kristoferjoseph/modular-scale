@@ -17,6 +17,14 @@ describe('Modular Scale', function() {
     expect(ms(3)).to.equal(27)
   });
 
+  it('should accept bases with units', function() {
+    ms = modularScale({
+      ratios: ['majorTwelfth'],
+      bases: ['1em']
+    })
+    expect(ms(3)).to.equal(27)
+  });
+
   it('should use accept ratio numbers as strings', function() {
     ms = modularScale({
       ratios: ['2.667'],

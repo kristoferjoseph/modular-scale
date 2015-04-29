@@ -21,17 +21,24 @@ var ratioNames = {
 }
 
 module.exports = function modularscale(options) {
-  options = options || {}
-  value  = options.value  || 0
-  bases  = options.bases  || msBases
-  ratios = options.ratios || msRatios
+  options = options        || {}
+  value   = options.value  || 0
+  bases   = options.bases  || msBases
+  ratios  = options.ratios || msRatios
+
+  bases = bases.map(function(base) {
+    if (typeof base === 'string') {
+      base = parseFloat(base, 10) || 1
+    }
+    return base
+  })
 
   ratios = ratios.map(function(ratio) {
     if (typeof ratio === 'string') {
       ratio = ratioNames[ratio] || parseFloat(ratio, 10) || 0
     }
     return ratio
-  });
+  })
 
   return function ms(value) {
     var r = []
