@@ -40,6 +40,13 @@ module.exports = function modularscale(options) {
     var base
     var i = 0
 
+    if (typeof value === 'string') {
+      value = 1;
+    }
+
+    if (value == undefined) {
+      value = msValue;
+    }
 
     for (ratio = 0; ratio < ratios.length; ratio++) {
       for (base = 0; base < bases.length; base++) {
