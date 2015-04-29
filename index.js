@@ -28,7 +28,7 @@ module.exports = function modularscale(options) {
 
   ratios = ratios.map(function(ratio) {
     if (typeof ratio === 'string') {
-      ratio = ratioNames[ratio] || parseInt(ratio, 10) || 0
+      ratio = ratioNames[ratio] || parseFloat(ratio, 10) || 0
     }
     return ratio
   });
