@@ -1,5 +1,7 @@
-var msBases = [1];
-var msRatios = [(1+ Math.sqrt(5))/2];
+var defaultBase = 1;
+var defaultRatio = ((1+ Math.sqrt(5)) * 0.5);
+var msBases = [defaultBase];
+var msRatios = [defaultRatio];
 var ratioNames = {
     minorSecond   : 1.067,
     majorSecond   : 1.125,
@@ -34,16 +36,18 @@ module.exports = function modularscale(options) {
 
   bases = bases.map(function(base) {
     if (typeof base === 'string') {
-      base = parseFloat(base, 10) || 1;
+      base = parseFloat(base, 10);
     }
-    return base;
+    return base || defaultBase;
   });
 
   ratios = ratios.map(function(ratio) {
     if (typeof ratio === 'string') {
-      ratio = ratioNames[ratio] || parseFloat(ratio, 10) || 0;
+      ratio = ratioNames[ratio]? ratioNames[ratio]:
+        parseFloat(ratio, 10);
     }
-    return ratio;
+
+    return ratio || defaultRatio;
   });
 
   return function ms(value) {

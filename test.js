@@ -68,10 +68,10 @@ describe('Modular Scale', function() {
     expect(ms(4)).to.equal(6.854);
   });
 
-  it('should not bomb wehn pased completely wrong values', function() {
+  it('should not bomb when pased completely wrong values', function() {
     ms = modularScale({
-      ratios: 'octopus',
-      bases: {}
+      ratios: [0],
+      bases: 'fuuuu'
     });
 
     expect(ms(-1)).to.equal(0.618);
