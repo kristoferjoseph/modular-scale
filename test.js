@@ -21,7 +21,7 @@ describe('Modular Scale', function() {
     expect(ms(3)).to.equal(27);
   });
 
-  it('should use accept ratio numbers as strings', function() {
+  it('should accept ratio numbers as strings', function() {
     ms = modularScale({
       ratios: ['2.667'],
       bases: [1]
@@ -45,6 +45,34 @@ describe('Modular Scale', function() {
 
   it('should return default scale', function() {
     ms = modularScale();
+
+    expect(ms(-1)).to.equal(0.618);
+    expect(ms(0)).to.equal(1);
+    expect(ms(1)).to.equal(1.618);
+    expect(ms(2)).to.equal(2.618);
+    expect(ms(3)).to.equal(4.236);
+    expect(ms(4)).to.equal(6.854);
+  });
+
+  it('should not bomb on empty bases and ratios', function() {
+    ms = modularScale({
+      ratios: [],
+      bases: []
+    });
+
+    expect(ms(-1)).to.equal(0.618);
+    expect(ms(0)).to.equal(1);
+    expect(ms(1)).to.equal(1.618);
+    expect(ms(2)).to.equal(2.618);
+    expect(ms(3)).to.equal(4.236);
+    expect(ms(4)).to.equal(6.854);
+  });
+
+  it('should not bomb wehn pased completely wrong values', function() {
+    ms = modularScale({
+      ratios: 'octopus',
+      bases: {}
+    });
 
     expect(ms(-1)).to.equal(0.618);
     expect(ms(0)).to.equal(1);

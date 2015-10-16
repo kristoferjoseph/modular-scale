@@ -23,8 +23,14 @@ var ratioNames = {
 module.exports = function modularscale(options) {
   options = options        || {};
   value   = options.value  || 0;
-  bases   = options.bases  || msBases;
-  ratios  = options.ratios || msRatios;
+  bases   = options.bases &&
+            Array.isArray(options.bases) &&
+            options.bases.length?
+              options.bases: msBases;
+  ratios  = options.ratios &&
+            Array.isArray(options.ratios) &&
+            options.ratios.length?
+              options.ratios: msRatios;
 
   bases = bases.map(function(base) {
     if (typeof base === 'string') {
