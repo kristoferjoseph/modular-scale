@@ -4,7 +4,7 @@
   "description": "Module for generating a modular scale.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test.js"
+    "test": "tape test.js | tap-format-spec"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,8 @@
   },
   "homepage": "https://github.com/kristoferjoseph/modular-scale",
   "devDependencies": {
+    "@tap-format/spec": "^0.2.0",
     "chai": "^2.3.0",
-    "mocha": "^1.21.4"
+    "tape": "^4.9.0"
   }
 }
