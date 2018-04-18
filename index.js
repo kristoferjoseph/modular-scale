@@ -1,4 +1,4 @@
-var defaultBase = 1
+var defaultBase = 16
 var defaultRatio = 1.618
 var ratios = {
   minorSecond: 1.067,
@@ -43,21 +43,46 @@ function ModularScale (options) {
     }
   }
 
-  return function ms (value) {
-    return value > 0
-      ? up(value)
-      : down(value * -1)
+  function ms (v, r) {
+    return v > 0
+      ? up(v, r)
+      : down(v * -1, r)
   }
 
-  function up (value) {
-    return round(Math.pow(ratio, value) * base)
+  function up (v, r) {
+    var c = Math.pow(ratio, v) * base
+    return r
+      ? round(relative(c))
+      : round(c)
   }
 
-  function down (value) {
-    return round(base / Math.pow(ratio, value))
+  function down (v, r) {
+    var c = base / Math.pow(ratio, v)
+    return r
+      ? round(relative(c))
+      : round(c)
   }
 
-  function round (value) {
-    return Math.round(value * 1000) / 1000
+  function relative (v) {
+    return v / base
   }
+
+  function round (v) {
+    return Math.round(v * 1000) / 1000
+  }
+
+  function steps (v, r) {
+    v = v || 8
+    var s = []
+    var half = Math.floor(v * 0.5)
+    var i = half * -1
+    var l = half + 1
+    for (i; i < l; i++) {
+      s.push(ms(i, r))
+    }
+    return s.reverse()
+  }
+
+  ms.steps = steps
+  return ms
 }
