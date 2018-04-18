@@ -65,7 +65,7 @@ test('should not bomb on empty bases and ratios', t => {
 
 test('should not bomb when pased completely wrong values', t => {
   var ms = modularScale({
-    ratio: 0,
+    ratio: 'yolo',
     base: 'nope'
   })
   t.equals(ms(1), 1.618)

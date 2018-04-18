@@ -1,5 +1,5 @@
 var defaultBase = 1
-var defaultRatio = 'goldenSection'
+var defaultRatio = 1.618
 var ratioNames = {
   minorSecond: 1.067,
   majorSecond: 1.125,
@@ -36,6 +36,9 @@ module.exports = function modularscale (options) {
     ratio = ratioNames[ratio]
       ? ratioNames[ratio]
       : parseFloat(ratio, 10)
+    if (Number.isNaN(ratio)) {
+      ratio = defaultRatio
+    }
   }
 
   return function ms (value) {
