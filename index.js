@@ -1,6 +1,6 @@
 var defaultBase = 1
 var defaultRatio = 1.618
-var ratioNames = {
+var ratios = {
   minorSecond: 1.067,
   majorSecond: 1.125,
   minorThird: 1.2,
@@ -20,7 +20,9 @@ var ratioNames = {
   doubleOctave: 4
 }
 
-module.exports = function modularscale (options) {
+module.exports = ModularScale
+ModularScale.ratios = ratios
+function ModularScale (options) {
   options = options || {}
   var base = options.base || defaultBase
   var ratio = options.ratio || defaultRatio
@@ -33,8 +35,8 @@ module.exports = function modularscale (options) {
   }
 
   if (typeof ratio === 'string') {
-    ratio = ratioNames[ratio]
-      ? ratioNames[ratio]
+    ratio = ratios[ratio]
+      ? ratios[ratio]
       : parseFloat(ratio, 10)
     if (Number.isNaN(ratio)) {
       ratio = defaultRatio
