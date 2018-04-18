@@ -1,5 +1,5 @@
 var defaultBase = 1
-var defaultRatio = ((1 + Math.sqrt(5)) * 0.5)
+var defaultRatio = 'goldenSection'
 var ratioNames = {
   minorSecond: 1.067,
   majorSecond: 1.125,
@@ -27,6 +27,9 @@ module.exports = function modularscale (options) {
 
   if (typeof base === 'string') {
     base = parseFloat(base, 10)
+    if (Number.isNaN(base)) {
+      base = defaultBase
+    }
   }
 
   if (typeof ratio === 'string') {
@@ -42,18 +45,14 @@ module.exports = function modularscale (options) {
   }
 
   function up (value) {
-    var result = 1
-    for (var i = 0; i < value; i++) {
-      result = base * ratio
-    }
-    return result
+    return round(Math.pow(ratio, value) * base)
   }
 
   function down (value) {
-    var result = 1
-    for (var i = 0; i < value; i++) {
-      result = base / ratio
-    }
-    return result
+    return round(base / Math.pow(ratio, value))
+  }
+
+  function round (value) {
+    return Math.round(value * 1000) / 1000
   }
 }
