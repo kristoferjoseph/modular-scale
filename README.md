@@ -11,7 +11,7 @@ install
 use
 ---
 
-```
+```js
 var modularScale = require('modular-scale')
 var ms = modularScale({
   ratio: 'goldenSection',
