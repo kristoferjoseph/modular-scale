@@ -12,9 +12,9 @@ use
 ---
 
 ```js
-var modularScale = require('modular-scale')
-var ms = modularScale({
-  ratio: 'goldenSection',
+var ModularScale = require('modular-scale')
+var ms = ModularScale({
+  ratio: ModularScale.ratios.goldenSection,
   base: '16px'
 })
 
