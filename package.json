@@ -1,6 +1,6 @@
 {
   "name": "modular-scale",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "description": "Module for generating a modular scale.",
   "main": "index.js",
   "scripts": {
