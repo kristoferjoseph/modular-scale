@@ -20,8 +20,7 @@ const ratios = {
   doubleOctave: 4
 }
 
-function ModularScale (options) {
-  options = options || {}
+function ModularScale (options={}) {
   let base = options.base || defaultBase
   let ratio = options.ratio || defaultRatio
 
@@ -69,8 +68,7 @@ function ModularScale (options) {
     return Math.round(v * 1000) / 1000
   }
 
-  function steps (v, r) {
-    v = v || 8
+  function steps (v=8, r) {
     const s = []
     const half = Math.floor(v * 0.5)
     let i = half * -1
