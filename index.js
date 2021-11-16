@@ -1,6 +1,6 @@
-var defaultBase = 16
-var defaultRatio = 1.618
-var ratios = {
+const defaultBase = 16
+const defaultRatio = 1.618
+const ratios = {
   minorSecond: 1.067,
   majorSecond: 1.125,
   minorThird: 1.2,
@@ -20,12 +20,10 @@ var ratios = {
   doubleOctave: 4
 }
 
-module.exports = ModularScale
-ModularScale.ratios = ratios
 function ModularScale (options) {
   options = options || {}
-  var base = options.base || defaultBase
-  var ratio = options.ratio || defaultRatio
+  let base = options.base || defaultBase
+  let ratio = options.ratio || defaultRatio
 
   if (typeof base === 'string') {
     base = parseFloat(base, 10)
@@ -50,14 +48,14 @@ function ModularScale (options) {
   }
 
   function up (v, r) {
-    var c = Math.pow(ratio, v) * base
+    const c = Math.pow(ratio, v) * base
     return r
       ? round(relative(c))
       : round(c)
   }
 
   function down (v, r) {
-    var c = base / Math.pow(ratio, v)
+    const c = base / Math.pow(ratio, v)
     return r
       ? round(relative(c))
       : round(c)
@@ -73,10 +71,10 @@ function ModularScale (options) {
 
   function steps (v, r) {
     v = v || 8
-    var s = []
-    var half = Math.floor(v * 0.5)
-    var i = half * -1
-    var l = half + 1
+    const s = []
+    const half = Math.floor(v * 0.5)
+    let i = half * -1
+    const l = half + 1
     for (i; i < l; i++) {
       s.push(ms(i, r))
     }
@@ -86,3 +84,6 @@ function ModularScale (options) {
   ms.steps = steps
   return ms
 }
+
+ModularScale.ratios = ratios
+module.exports = ModularScale

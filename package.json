@@ -4,7 +4,7 @@
   "description": "Module for generating a modular scale.",
   "main": "index.js",
   "scripts": {
-    "test": "tape test.js | tap-format-spec"
+    "test": "tape test.js | tap-spek"
   },
   "repository": {
     "type": "git",
@@ -18,14 +18,13 @@
     "css"
   ],
   "author": "@dam",
-  "license": "BSD",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/kristoferjoseph/modular-scale/issues"
   },
   "homepage": "https://github.com/kristoferjoseph/modular-scale",
   "devDependencies": {
-    "@tap-format/spec": "^0.2.0",
-    "chai": "^2.3.0",
+    "tap-spek": "^0.0.11",
     "tape": "^4.9.0"
   }
 }
